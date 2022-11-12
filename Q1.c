@@ -48,7 +48,7 @@ int main(int argc, char* argv[]) {
         random = rand();
         random%=count;
 
-        fseek(file, 0, random);
+        fseek(file, random, SEEK_SET);
         
         printf(">");
         while(j<m){
