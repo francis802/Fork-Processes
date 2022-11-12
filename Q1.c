@@ -40,24 +40,16 @@ int main(int argc, char* argv[]) {
 
 
     srand(0);
-    count = 700;
 
-    int random = 0;
+    int random;
     int j; char c;
     for(int i=0; i<=n; i++) {
-
+        j = 0;
         random = rand();
         random%=count;
-        printf("%d",random);
 
-        // Moving pointer to end
-        fseek(file, m, random);
-
-        // Printing position of pointer
-        printf(">%s<\n", file);
-
-
-        /*
+        fseek(file, 0, random);
+        
         printf(">");
         while(j<m){
             c = fgetc(file);
@@ -65,7 +57,7 @@ int main(int argc, char* argv[]) {
             j++;
         }
         printf("<\n");
-         */
+        
     }
     fclose(file);
 
