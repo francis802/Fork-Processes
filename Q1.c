@@ -14,11 +14,10 @@ int main(int argc, char* argv[]) {
 
     int n, m;
 
-    FILE* filecount;
     FILE* file;
     file = fopen(argv[1],"r");
-    filecount = fopen(argv[1],"r");
-    if (file == NULL || filecount == NULL) {
+
+    if (file == NULL) {
         printf("error: cannot open %s\n", argv[1]);
         return EXIT_FAILURE;
     }
@@ -27,15 +26,13 @@ int main(int argc, char* argv[]) {
     m = atoi(argv[3]);
 
 
-
     int count = 0;
     char ch;
     /* Count the amount of characters in the file */
-    for (ch = getc(filecount); ch != EOF; ch = getc(filecount))
+    for (ch = getc(file); ch != EOF; ch = getc(file))
         // Increment count for this character
         count = count + 1;
 
-    fclose(filecount);
     count-=m;
 
 
@@ -49,7 +46,7 @@ int main(int argc, char* argv[]) {
         random%=count;
 
         fseek(file, random, SEEK_SET);
-        
+
         printf(">");
         while(j<m){
             c = fgetc(file);
@@ -57,7 +54,7 @@ int main(int argc, char* argv[]) {
             j++;
         }
         printf("<\n");
-        
+
     }
     fclose(file);
 
