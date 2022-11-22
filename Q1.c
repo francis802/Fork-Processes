@@ -48,7 +48,6 @@ int main(int argc, char* argv[]) {
             j++;
         }
         printf("<\n");
-
     }
     fclose(file);
 
