@@ -8,18 +8,20 @@
 int main(int argc, char* argv[]){
     int i;
     pid_t pid;
+    char*  lst_files[argc+1];
+    lst_files[0] = "zip";
+    lst_files[1] = "epubs.zip";
+    char* file_name_with_epub;
     for(i=1; i<argc; i++){
+        file_name_with_epub = strcat(strncpy(malloc(strlen(argv[i])+5), argv[i], strlen(argv[i])-4), ".epub");
+        lst_files[i+1] = file_name_with_epub;
         pid = fork();
         if(pid == 0){
-            char* file_name_with_epub = strcat(strncpy(malloc(strlen(argv[i])+5), argv[i], strlen(argv[i])-4), ".epub");
             printf("Child %d: %s, %s\n", i, file_name_with_epub, argv[i]);
             execlp("pandoc", "pandoc", argv[i], "-o", file_name_with_epub, NULL);
-            _exit(1);
         }
-    }
-    for(i=1; i<argc; i++){
         wait(NULL);
     }
-    execlp("zip", "zip", "epubs.zip", "*.epub", NULL);
+    execvp("zip", lst_files);
     return 0;
 }
