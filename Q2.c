@@ -10,7 +10,7 @@ int main(int argc, char* argv[]){
     pid_t pid;
     char*  lst_files[argc+1];
     lst_files[0] = "zip";
-    lst_files[1] = "epubs.zip";
+    lst_files[1] = "ebooks.zip";
     char* file_name_with_epub;
     for(i=1; i<argc; i++){
         file_name_with_epub = strcat(strncpy(malloc(strlen(argv[i])+5), argv[i], strlen(argv[i])-4), ".epub");
