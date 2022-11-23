@@ -20,8 +20,9 @@ int main(int argc, char* argv[]){
             printf("Child %d: %s, %s\n", i, file_name_with_epub, argv[i]);
             execlp("pandoc", "pandoc", argv[i], "-o", file_name_with_epub, NULL);
         }
-        wait(NULL);
+        wait(&pid);
     }
+    lst_files[argc+1] = NULL;
     execvp("zip", lst_files);
     return 0;
 }
