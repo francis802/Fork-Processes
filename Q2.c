@@ -8,6 +8,11 @@ int main(int argc, char* argv[]){
     int i;
     pid_t pid;
 
+    if (argc < 2) {
+        printf("correct usage: text2epu filename_1 filename_2 ... filename_n\n");
+        return EXIT_FAILURE;
+    }
+
     //Create array to store all commands needed to zip the ebooks
     char*  lst_files[argc+1];
     lst_files[0] = "zip";
@@ -21,6 +26,12 @@ int main(int argc, char* argv[]){
         lst_files[i+1] = file_name_with_epub;
 
         pid = fork();
+        if (pid < 0) {
+            //Error forking
+            perror("fork failed");
+            return EXIT_FAILURE;
+        }
+
         if (pid != 0) printf("[pid%d] converting %s ...\n", pid, argv[i]);
         else {
             execlp("pandoc", "pandoc", argv[i], "-o", file_name_with_epub, NULL);
