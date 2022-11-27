@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 int main(int argc, char* argv[]) {
+    
     // Check if the user has entered the correct number of arguments
     if (argc != 4) {
         printf("correct usage: samples filename n_positions m_characters\n");

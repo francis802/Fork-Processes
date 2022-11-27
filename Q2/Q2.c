@@ -5,13 +5,15 @@
 #include <sys/wait.h>
 
 int main(int argc, char* argv[]){
-    int i;
-    pid_t pid;
-
+    
+    // Check if the user has entered the correct number of arguments
     if (argc < 2) {
         printf("correct usage: text2epu filename_1 filename_2 ... filename_n\n");
         return EXIT_FAILURE;
     }
+
+    int i;
+    pid_t pid;
 
     //Create array to store all commands needed to zip the ebooks
     char*  lst_files[argc+1];
