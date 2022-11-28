@@ -1,4 +1,4 @@
-txt2epub:
+txt2epub: Q2.c
 	@gcc Q2.c -o txt2epub -Wall
 
 clean_txt2epub:

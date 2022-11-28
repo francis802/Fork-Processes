@@ -3,23 +3,30 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <string.h>
 
 
 int main(int argc, char* argv[]){
     
     // Check if the user has entered the correct number of arguments
     if (argc != 4) {
-        printf("correct usage: samples filename n_positions m_characters\n");
+        printf("correct usage: tokenring n_pipes probability time\n");
         return EXIT_FAILURE;
     }
 
-    int token = 0;
-    int fork_counter = 0;
-    int process_number = 1;
-    char process_number_char[1];
-    pid_t pid;
+    int i = 0;
+    int n = atoi(argv[1]);
+    char curr_pipe[9];
+    //int token = 0;
+    //int fork_counter = 0;
+    //int process_number = 1;
+    //char process_number_char[1];
+    //pid_t pid;
 
-    while(true){
+    while(1){
+        snprintf(curr_pipe, sizeof curr_pipe, "pipe%dto%d", i+1, (i+1)%n+1);
+        printf("%s\n",curr_pipe);
+        /*
         //Creates n processes
         if(fork_counter < atoi(argv[1])){
             pid = fork();
@@ -30,6 +37,7 @@ int main(int argc, char* argv[]){
             }
             fork_counter++;
         }
-
+        */
+       i = (i+1)%n;
     }
 }
