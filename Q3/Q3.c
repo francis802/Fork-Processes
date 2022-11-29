@@ -3,6 +3,9 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <fcntl.h>
+#include <sys/wait.h>
+#include <unistd.h>
 #include <string.h>
 
 
@@ -13,31 +16,41 @@ int main(int argc, char* argv[]){
         printf("correct usage: tokenring n_pipes probability time\n");
         return EXIT_FAILURE;
     }
-
-    int i = 0;
     int n = atoi(argv[1]);
-    char curr_pipe[9];
-    //int token = 0;
-    //int fork_counter = 0;
-    //int process_number = 1;
-    //char process_number_char[1];
-    //pid_t pid;
-
-    while(1){
+    char curr_pipe[9+(strlen(argv[1])-1)*2]; //Always alloc 9 bytes of memory + enough bytes for the biggest string possible (example: n=11, biggestCase: pipe10to11)
+    int token = 0;
+    char stoken[10];
+    //char process_number_char[5];
+    int fd = 0;
+    pid_t pid;
+    for (int i = 0; i<n-1;i++){
         snprintf(curr_pipe, sizeof curr_pipe, "pipe%dto%d", i+1, (i+1)%n+1);
-        printf("%s\n",curr_pipe);
-        /*
-        //Creates n processes
-        if(fork_counter < atoi(argv[1])){
-            pid = fork();
-            if (pid < 0) {
+        mkfifo(curr_pipe, 0666);
+        pid = fork();
+        if (pid < 0) {
                 //Error forking
                 perror("fork failed");
                 return EXIT_FAILURE;
-            }
-            fork_counter++;
         }
-        */
-       i = (i+1)%n;
+        if (pid>0) break;
+    }
+    int flag = 1;
+    while(1){
+        if (flag){
+            printf("Here with pid: %d\n", getpid());
+            flag = 0;
+        }
+        if(pid > 0){
+            fd = open(curr_pipe, O_WRONLY);
+            if (fd ==- 1) {
+                perror("Open error");
+            }
+            token++;
+            snprintf(stoken, sizeof stoken, "%d",token);
+            if (write(fd, stoken, strlen(curr_pipe))==-1) {
+                perror("Write error");
+                return EXIT_FAILURE;
+            }
+        }
     }
 }

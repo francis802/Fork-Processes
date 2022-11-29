@@ -3,3 +3,4 @@ tokenring: Q3.c
 
 clean_tokenring:
 	@rm tokenring
+	@rm pipe*
