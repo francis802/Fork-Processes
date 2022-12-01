@@ -38,7 +38,7 @@ int main(int argc, char* argv[]){
         else {
             execlp("pandoc", "pandoc", argv[i], "-o", file_name_with_epub, NULL);
         }
-        wait(&pid); //Wait for child procedure to die
+        waitpid(pid, NULL, 0);//Wait for child procedure to die
     }
     lst_files[argc+1] = NULL; //Last element of array must be NULL for execvp to operate well
     execvp("zip", lst_files);
